@@ -1,23 +1,19 @@
--- React initialized
-
--- Created folder structure for smallApps page containing hangman and rock paper scissors python scripts
-
-
-
 ***************** TO DO *****************
 ## Backend:
-1. init Django backend
+
 
 ## Routing:
-2. assign base url to landing page
-3. create link to "smallApps" page on www.jremyvila.com/smallApps or whatever.
+-- assign base url to landing page
+
+////// DELAY. TEMP PUTTING SMALLAPPS PAGE INTO LANDING PAGE //////
+== create link to "smallApps" page on www.jremyvila.com/smallApps or whatever.
 
     ## toolBar:
     1. make a tool bar that loads at the top of every page and links to every other page.
 
 ## smallApps component:
-4. integrate python scripts into smallApps page.
+-- integrate python scripts into smallApps page.
 
 
 ## About component:
-5. Put a nice handsome picture of myself with some character fluff.
+-- Put a nice handsome picture of myself with some character fluff.
