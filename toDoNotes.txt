@@ -1,0 +1,3 @@
+-- React initialized
+
+-- Created folder structure for smallApps page containing hangman and rock paper scissors python scripts
