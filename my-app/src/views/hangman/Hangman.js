@@ -11,14 +11,15 @@ function Hangman() {
       .then((response) => {
         // Handle the response data
         setWordBankData(response.data);
-        console.log(wordBankData)
       })
       .catch((error) => {
         // Handle any errors
         console.error('Error fetching data:', error);
       });
-  }, []); // The empty dependency array ensures this effect runs once on component mount
+  }, []); // dependency array can be empty
 
+  console.log(wordBankData)
+  
   return (
     <div>
       <div>
