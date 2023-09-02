@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import SmallApps from './views/smallApps/smallApps';
+import SmallApps from './views/smallApps/SmallApps';
 
 function App() {
   return (

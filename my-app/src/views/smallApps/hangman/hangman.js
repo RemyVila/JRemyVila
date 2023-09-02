@@ -9,6 +9,7 @@ function Hangman() {
         </h3>
             Terminal based hangman.py integrated to a Django backend to
             handle the operations and display via React.
+            
       </div>
 
     </div>

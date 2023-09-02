@@ -1,5 +1,5 @@
 import React from 'react';
-import Hangman from './hangman/hangman';
+import Hangman from './hangman/Hangman';
 
 function SmallApps() {
   return (
