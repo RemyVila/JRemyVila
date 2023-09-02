@@ -1,12 +1,14 @@
 #/my_app/views.py
 from django.shortcuts import render
 from rest_framework import generics
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+import json
 
 from .models import HangmanWordBank, UserProfile
 from .serializers import HangmanWordBankSerializer, UserProfileSerializer
 
-import json
+# Disable CSRF validation
+from django.views.decorators.csrf import csrf_exempt
 
 
 # HANGMAN
@@ -20,37 +22,37 @@ class UserProfiles(generics.ListAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-from django.http import JsonResponse
-
-from django.http import JsonResponse
-from .models import UserProfile  # Import your custom model
 
 def register(request):
     if request.method == 'POST':
         try:
             # Parse JSON data from the request body
             data = json.loads(request.body)
-            username = data['user']
-            password = data['password']
+            username = data.get('user')
+            password = data.get('password')
+
+            # Check if a user with the provided username already exists
+            if UserProfile.objects.filter(user=username).exists():
+                response_data = {'error': 'User already exists under that name'}
+                return JsonResponse(response_data, status=400)  # 400 Bad Request status code
 
             # Create a new UserProfile instance and save it to the database
-            user_profile = UserProfile(user=username, password=password, is_online=True)
+            user_profile = UserProfile(user=username, password=password, is_online=False)
             user_profile.save()
 
-            # Send a JSON response
             response_data = {'message': 'User created successfully'}
             return JsonResponse(response_data, status=201)  # 201 Created status code
+        except IntegrityError:
+            # Handle IntegrityError, which occurs if there's a database integrity violation (e.g., duplicate user)
+            response_data = {'error': 'User already exists under that name'}
+            return JsonResponse(response_data, status=400)  # 400 Bad Request status code
         except json.JSONDecodeError:
-            # Handle JSON decoding error
             response_data = {'error': 'Invalid JSON data'}
             return JsonResponse(response_data, status=400)  # 400 Bad Request status code
     else:
-        # Handle GET requests or other HTTP methods if needed
         response_data = {'message': 'GET requests not supported'}
         return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
 
-
-from django.http import JsonResponse
 
 # Fake Auth
 def user_login(request):
@@ -81,6 +83,41 @@ def user_login(request):
         return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
 
 
+# log out user
+def log_out(request):
+    # Check for HTTP request type
+    if request.method == 'POST':
+        try:
+            # Parse JSON data from the request body
+            data = json.loads(request.body)
+            username = data.get('user')
+
+            # Retrieve the UserProfile instance based on the username
+            user_profile = UserProfile.objects.get(user=username)
+
+            # Set 'is_online' to False
+            user_profile.is_online = False
+            user_profile.save()
+
+            response_data = {'message': 'User logged out successfully'}
+            return JsonResponse(response_data, status=200)
+        
+        # if there are data integrity conflicts, will throw errors
+        except IntegrityError:
+            response_data = {'error': 'User already exists under that name'}
+            return JsonResponse(response_data, status=400)  # 400 Bad Request status code
+        except UserProfile.DoesNotExist:
+            response_data = {'error': 'User not found'}
+            return JsonResponse(response_data, status=404)  # 404 Not Found status code
+        except json.JSONDecodeError:
+            response_data = {'error': 'Invalid JSON data'}
+            return JsonResponse(response_data, status=400)  # 400 Bad Request status code
+    else:
+        response_data = {'message': 'GET requests not supported'}
+        return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
+
+
+
 
 def all_users(request):
     if request.method == 'GET':
@@ -95,3 +132,29 @@ def all_users(request):
     else:
         response_data = {'message': 'Only GET requests are supported'}
         return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
+
+
+# Admin privileges
+# @csrf_exempt
+# def admin_delete_user(request, username):
+#     if request.method == 'DELETE':
+#         try:
+#             # Check if a user with the provided username exists
+#             user_profile = UserProfile.objects.get(user=username)
+            
+#             # Delete the user profile
+#             user_profile.delete()
+            
+#             response_data = {'message': 'User deleted successfully'}
+#             return JsonResponse(response_data, status=200)  # 200 OK status code
+#         except UserProfile.DoesNotExist:
+#             response_data = {'error': 'User not found'}
+#             return JsonResponse(response_data, status=404)  # 404 Not Found status code
+#     else:
+#         response_data = {'message': 'Only DELETE requests are supported'}
+#         return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
+
+
+def youre_here(request):
+    if request.method == 'GET':
+        return HttpResponse('You are here!')
