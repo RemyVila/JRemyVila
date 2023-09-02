@@ -9,7 +9,6 @@ function SmallApps() {
         put in my website.
       </p>
       <Hangman/>
-
     </div>
   );
 }

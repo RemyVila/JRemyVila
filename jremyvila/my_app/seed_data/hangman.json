@@ -1,0 +1,50 @@
+[
+  {
+      "model": "my_app.HangmanWordBank",
+      "pk": 1,
+      "fields": {
+          "name": "Grease",
+          "hint": "Melted fat that can coagulate into a gelatinous form."
+      }
+  },
+  {
+      "model": "my_app.HangmanWordBank",
+      "pk": 2,
+      "fields": {
+          "name": "Butter",
+          "hint": "Saturated fat made from cow’s milk."
+      }
+  },
+  {
+      "model": "my_app.HangmanWordBank",
+      "pk": 3,
+      "fields": {
+          "name": "Censor",
+          "hint": "To prevent freedom of speech and expression."
+      }
+  },
+  {
+      "model": "my_app.HangmanWordBank",
+      "pk": 4,
+      "fields": {
+          "name": "Chevy",
+          "hint": "I drove mine to the levi but the levi was dry."
+      }
+  },
+  {
+      "model": "my_app.HangmanWordBank",
+      "pk": 5,
+      "fields": {
+          "name": "Roller Derby",
+          "hint": "Aggressive women going in a circle"
+      }
+  },
+  {
+      "model": "my_app.HangmanWordBank",
+      "pk": 6,
+      "fields": {
+          "name": "Safari",
+          "hint": "An expedition to hunt or observe animals in Africa."
+      }
+  }
+]
