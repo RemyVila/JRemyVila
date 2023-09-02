@@ -1,0 +1,19 @@
+[
+    {
+        "model": "my_app.UserProfile",
+        "pk": 1,
+        "fields": {
+            "user": "remy",
+            "password": "admin",
+            "is_online": false
+        }
+    },
+    {
+        "model": "my_app.UserProfile",
+        "pk": 2,
+        "fields": {
+            "user": "peaches",
+            "password": "peaches"
+        }
+    }
+]
