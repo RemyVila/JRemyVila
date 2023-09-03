@@ -17,6 +17,8 @@ class HangmanWordBankList(generics.ListAPIView):
     serializer_class = HangmanWordBankSerializer
 
 
+
+
 # Login and Register
 class UserProfiles(generics.ListAPIView):
     queryset = UserProfile.objects.all()

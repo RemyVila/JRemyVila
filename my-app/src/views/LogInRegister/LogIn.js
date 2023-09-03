@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function LogIn() {
+function LogIn({ onLogin }) {
   const [formData, setFormData] = useState({
-    username: '',
+    user: '',
     password: '',
   });
 
@@ -16,10 +16,22 @@ function LogIn() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // make api req here to log in
-    console.log('Submitted data:', formData);
+    console.log(formData);
+    try {
+      await axios.post('http://127.0.0.1:8000/api/login/', formData)
+      .then(res => {
+        console.log(res.data.message)
+        const user = { user: formData.user }; // Replace this with your login logic
+        onLogin(user); // Pass the user data to the parent component
+      })
+
+      // window.location.href = '/';
+    } catch (error) {
+
+    }
+    // console.log('Submitted data:', formData);
   };
 
   return (
@@ -27,12 +39,12 @@ function LogIn() {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="user">user:</label>
           <input
             type="text"
-            id="username"
-            name="username"
-            value={formData.username}
+            id="user"
+            name="user"
+            value={formData.user}
             onChange={handleInputChange}
           />
         </div>

@@ -1,3 +1,5 @@
+# SINGLE PLAYER TERMINAL GAME VERSION OF HANGMAN
+
 import json
 import random
 
