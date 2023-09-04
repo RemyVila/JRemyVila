@@ -5,25 +5,74 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import authenticate
 import json
 
-from .models import HangmanWordBank, UserProfile
+from .models import HangmanWordBank, UserProfile, Leaderboard
 from .serializers import HangmanWordBankSerializer, UserProfileSerializer
-
+from .serializers import LeaderboardSerializer
 # Disable CSRF validation
 from django.views.decorators.csrf import csrf_exempt
 
 
 # HANGMAN
+
 class HangmanWordBankList(generics.ListAPIView):
     queryset = HangmanWordBank.objects.all()
     serializer_class = HangmanWordBankSerializer
-
-
-
 
 # Login and Register
 class UserProfiles(generics.ListAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+class LeaderboardView(generics.ListAPIView):
+    queryset = Leaderboard.objects.all()
+    serializer_class = LeaderboardSerializer
+
+
+# Hangman operations
+@csrf_exempt
+def update_leaderboard(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            user = data.get('user')
+            game_result = data.get('game_result')
+
+            # Check if the user already exists in the Leaderboard
+            try:
+                leaderboard_entry = Leaderboard.objects.get(user=user)
+            except Leaderboard.DoesNotExist:
+                # If the user does not exist, create a new entry
+                leaderboard_entry = Leaderboard(user=user, wins=0, losses=0)
+
+            if game_result == 1:
+                leaderboard_entry.wins += 1
+            elif game_result == 0:
+                leaderboard_entry.losses += 1
+
+            leaderboard_entry.save()
+
+            response_data = {'message': 'Leaderboard updated successfully'}
+            return JsonResponse(response_data, status=200)
+
+        except json.JSONDecodeError:
+            response_data = {'error': 'Invalid JSON data'}
+            return JsonResponse(response_data, status=400)
+
+    else:
+        response_data = {'message': 'GET requests not supported'}
+        return JsonResponse(response_data, status=405)
+
+
+def view_leaderboard(request):
+    # Query the leaderboard table to get all records
+    leaderboard_data = Leaderboard.objects.all()
+
+    # Convert the queryset to a list of dictionaries
+    leaderboard_list = [{'user': entry.user, 'wins': entry.wins, 'losses': entry.losses} for entry in leaderboard_data]
+
+    # Create a JSON response with the leaderboard data
+    response_data = {'leaderboard': leaderboard_list}
+    return JsonResponse(response_data)
 
 
 def register(request):

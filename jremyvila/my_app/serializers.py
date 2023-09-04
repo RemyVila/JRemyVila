@@ -1,8 +1,7 @@
 # my_app/serializers.py
 
 from rest_framework import serializers
-from .models import HangmanWordBank
-from .models import UserProfile
+from .models import HangmanWordBank, UserProfile, Leaderboard
 
 class HangmanWordBankSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,3 +12,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('user', 'password', 'is_online')
+
+class LeaderboardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Leaderboard
+        fields = ('user', 'wins', 'losses')

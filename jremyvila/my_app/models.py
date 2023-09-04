@@ -23,6 +23,6 @@ class UserProfile(models.Model):
 
 # Leaderboard
 class Leaderboard(models.Model):
-    user = models.CharField(max_length=30)
+    user = models.CharField(max_length=30, unique=True)
     wins = models.IntegerField()
     losses = models.IntegerField()

@@ -27,7 +27,6 @@ function LogIn({ onLogin }) {
         onLogin(user); // Pass the user data to the parent component
       })
 
-      // window.location.href = '/';
     } catch (error) {
 
     }

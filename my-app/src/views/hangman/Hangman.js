@@ -24,7 +24,6 @@ function Hangman() {
     <div>
       <div>
         <h3>Hangman</h3>
-        {/* Render the fetched data */}
         <div>
           {wordBankData.map((item) => (
             <li key={item.id}>

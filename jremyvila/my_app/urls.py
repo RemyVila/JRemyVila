@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('all_users/', views.all_users, name='all_users'),
     path('logout/', views.log_out, name='log_out'),
-    # path('admin/delete-user/', views.admin_delete_user, name='admin_delete_user'),
+    path('leaderboard/update/', views.update_leaderboard, name="update_leaderboard"),
+    path('leaderboard/', views.view_leaderboard, name="view_leaderboard"),
     path('', views.youre_here, name='youre_here'),
 ]
