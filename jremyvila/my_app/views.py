@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth import authenticate
 import json
 
 from .models import HangmanWordBank, UserProfile
@@ -64,26 +65,30 @@ def user_login(request):
             username = data['user']
             password = data['password']
 
-            is_online = True  # Change user_authenticated to is_online
-
-            if is_online:
-                # Update the 'is_online' field to True
+            # Retrieve the user profile based on the username
+            try:
                 user_profile = UserProfile.objects.get(user=username)
-                user_profile.is_online = True
-                user_profile.save()
+            except UserProfile.DoesNotExist:
+                user_profile = None
+
+            if user_profile and user_profile.password == password:
+                # Password matches, consider it a successful login
+                user_profile.is_online = True  # Set is_online to True
+                user_profile.save()  # Save the updated user profile
 
                 response_data = {'message': 'User logged in successfully'}
                 return JsonResponse(response_data, status=200)
             else:
-                response_data = {'error': 'Authentication failed'}
+                # Password does not match or user does not exist
+                response_data = {'error': 'Wrong username or password'}
                 return JsonResponse(response_data, status=401)  # 401 Unauthorized status code
+
         except json.JSONDecodeError:
             response_data = {'error': 'Invalid JSON data'}
             return JsonResponse(response_data, status=400)  # 400 Bad Request status code
     else:
         response_data = {'message': 'GET requests not supported'}
-        return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
-
+        return JsonResponse(response_data, status=405)
 
 # log out user
 def log_out(request):
@@ -135,26 +140,6 @@ def all_users(request):
         response_data = {'message': 'Only GET requests are supported'}
         return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
 
-
-# Admin privileges
-# @csrf_exempt
-# def admin_delete_user(request, username):
-#     if request.method == 'DELETE':
-#         try:
-#             # Check if a user with the provided username exists
-#             user_profile = UserProfile.objects.get(user=username)
-            
-#             # Delete the user profile
-#             user_profile.delete()
-            
-#             response_data = {'message': 'User deleted successfully'}
-#             return JsonResponse(response_data, status=200)  # 200 OK status code
-#         except UserProfile.DoesNotExist:
-#             response_data = {'error': 'User not found'}
-#             return JsonResponse(response_data, status=404)  # 404 Not Found status code
-#     else:
-#         response_data = {'message': 'Only DELETE requests are supported'}
-#         return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
 
 
 def youre_here(request):

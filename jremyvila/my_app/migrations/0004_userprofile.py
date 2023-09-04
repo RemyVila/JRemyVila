@@ -22,7 +22,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('user', models.CharField(max_length=30)),
                 ('password', models.CharField(max_length=30)),
-                ('is_online', models.BooleanField()),
+                ('is_online', models.BooleanField(null=True)),
             ],
         ),
+        migrations.RunPython(load_seed_data),
     ]

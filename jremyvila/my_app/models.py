@@ -20,3 +20,9 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user
+
+# Leaderboard
+class Leaderboard(models.Model):
+    user = models.CharField(max_length=30)
+    wins = models.IntegerField()
+    losses = models.IntegerField()

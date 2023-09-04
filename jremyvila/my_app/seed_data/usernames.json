@@ -13,7 +13,8 @@
         "pk": 2,
         "fields": {
             "user": "peaches",
-            "password": "peaches"
+            "password": "peaches",
+            "is_online": false
         }
     }
 ]
