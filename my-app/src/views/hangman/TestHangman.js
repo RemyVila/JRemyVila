@@ -12,7 +12,6 @@ function Hangman({ userForLogOut }) {
   // State for word bank data, working word, limbs count, known letters, and leaderboard
   const [wordBankData, setWordBankData] = useState([]);
   const [workingWord, setWorkingWord] = useState([]);
-  const [wordHint, setWordHint] = useState('');
   const [limbs, setLimbs] = useState(4);
   const [knownLetters, setKnownLetters] = useState([]);
   const [guessedLetters, setGuessedLetters] = useState([]);
@@ -41,17 +40,13 @@ function Hangman({ userForLogOut }) {
     axios.get(`${testingAPI}api/hangman-wordbank/`)
       .then((response) => {
         setWordBankData(response.data);
-  
+
         // Generate a random word and split it into an array
         const randomIndex = Math.floor(Math.random() * response.data.length);
-        const selectedWordData = response.data[randomIndex];
-        const randomWord = selectedWordData.name;
+        const randomWord = response.data[randomIndex].name;
         const randomWordArray = randomWord.split('');
         setWorkingWord(randomWordArray);
-  
-        // Set the hint for the selected word
-        setWordHint(selectedWordData.hint);
-  
+
         // Initialize knownLetters with 0 for each letter in the word
         const computedKnownLetters = randomWordArray.map((char) => (char === ' ' ? ' ' : 0));
         setKnownLetters(computedKnownLetters);
@@ -61,7 +56,6 @@ function Hangman({ userForLogOut }) {
         console.error('Error fetching word bank data:', error);
       });
   };
-  
 
   // Function to fetch leaderboard data
   const fetchLeaderboardData = () => {
@@ -132,6 +126,7 @@ function Hangman({ userForLogOut }) {
     }
   };
 
+  // Function to restart the game
 // Function to restart the game
 const restartGame = () => {
   setLimbs(4);
@@ -143,13 +138,9 @@ const restartGame = () => {
   // Fetch a new word from the word bank using wordBankData
   if (wordBankData.length > 0) {
     const randomIndex = Math.floor(Math.random() * wordBankData.length);
-    const selectedWordData = wordBankData[randomIndex];
-    const randomWord = selectedWordData.name;
+    const randomWord = wordBankData[randomIndex].name;
     const randomWordArray = randomWord.split('');
     setWorkingWord(randomWordArray);
-
-    // Set the hint for the selected word
-    setWordHint(selectedWordData.hint);
 
     // Initialize knownLetters with 0 for each letter in the word
     const computedKnownLetters = randomWordArray.map((char) => (char === ' ' ? ' ' : 0));
@@ -160,19 +151,19 @@ const restartGame = () => {
   // Determine the image file path based on limbs count
   let limbImagePath;
   switch (limbs) {
-    case 0:
+    case 4:
       limbImagePath = limbs4;
       break;
-    case 1:
+    case 3:
       limbImagePath = limbs3;
       break;
     case 2:
       limbImagePath = limbs2;
       break;
-    case 3:
+    case 1:
       limbImagePath = limbs1;
       break;
-    case 4:
+    case 0:
       limbImagePath = limbs0;
       break;
     default:
@@ -206,13 +197,6 @@ const restartGame = () => {
                 </div>
                 <div>
                   <h5>Make a Guess</h5>
-                  <div>
-                    You have {limbs + 1} guesses left!
-                  </div>
-                  <div>
-                    <h4>Hint</h4>
-                    <p>{wordHint}</p>
-                  </div>
                   <div>
                     {Array.from({ length: 26 }, (_, i) => (
                       <button

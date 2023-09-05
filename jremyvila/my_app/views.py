@@ -13,7 +13,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 # HANGMAN
-
 class HangmanWordBankList(generics.ListAPIView):
     queryset = HangmanWordBank.objects.all()
     serializer_class = HangmanWordBankSerializer
