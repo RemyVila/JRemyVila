@@ -192,7 +192,7 @@ const restartGame = () => {
             <div>
               {knownLetters.map((char, index) => (
                 <span key={index} className="letter">
-                  {char === ' ' ? ' ' : knownLetters[index]}
+                  {char === ' ' ? ' ' : char === 0 ? '_ ' : char}
                 </span>
               ))}
                 <div>
