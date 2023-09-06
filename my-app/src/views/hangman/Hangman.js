@@ -195,6 +195,10 @@ const restartGame = () => {
                   {char === ' ' ? ' ' : knownLetters[index]}
                 </span>
               ))}
+                <div>
+                  <h4>Hint</h4>
+                  <p>{wordHint}</p>
+                </div>
               <div>
                 <div>
                   <h5>Guessed Letters</h5>
@@ -208,10 +212,6 @@ const restartGame = () => {
                   <h5>Make a Guess</h5>
                   <div>
                     You have {limbs + 1} guesses left!
-                  </div>
-                  <div>
-                    <h4>Hint</h4>
-                    <p>{wordHint}</p>
                   </div>
                   <div>
                     {Array.from({ length: 26 }, (_, i) => (
