@@ -40,6 +40,7 @@ function Toolbar({ userForLogOut }) {
           ) : (
               <Link to="/login">Log In </Link>
           )}
+            <a href='https://github.com/RemyVila/JRemyVila'>| My GitHub</a>
         </b>
       </div>
     </div>

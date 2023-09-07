@@ -182,6 +182,7 @@ const restartGame = () => {
   return (
     <div className='hangmanContainer'>
       <div>
+        <h3>If you are not logged in, please log in and do not refresh the page before playing.</h3>
         <h1>Hangman</h1>
         <div>
           <img className="hangman_limbs" src={limbImagePath} alt={`Hangman with ${limbs} limbs`} />

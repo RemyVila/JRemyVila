@@ -18,11 +18,10 @@ function Home() {
           </p>
           <p>
             There is no ACTUAL auth implemented in this site yet. I am just holding the username in state,
-            so if a component has to remount e.g. by refreshing the page.
+            so if a component has to remount e.g. by refreshing the page, the state will be lost.
           </p>
           <p>
-            The logged in username will be lost, and
-            you will encounter an error if you try to submit a win or loss to the Hangman leaderboard.
+            This becomes obvious if you try to update the Hangman leaderboard.
           </p>
           <p>
             The pseudo auth implentation I used is also the reason you probably had your browser notify you that
@@ -30,8 +29,11 @@ function Home() {
           </p>
           <p>
             Because I imagine this may happen often, I feel the need to say I did not follow a tutorial or guide
-            for any of this.
+            for any portion of this site.
             Only documentation and a little chatGPT as resources.
+          </p>
+          <p>
+            Please check out the Hangman page as it is the keystone of the project
           </p>
         </div>
       </div>
