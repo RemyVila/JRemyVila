@@ -30,25 +30,18 @@ function Toolbar({ userForLogOut }) {
   };
 
   return (
-    <div className="toolbar">
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/hangman">Hangman</Link>
-        </li>
-
-        {isLoggedIn ? (
-          <li>
-            <button onClick={handleLogout}>Logout {userForLogOut.user}</button>
-          </li>
-        ) : (
-          <li>
-            <Link to="/login">Log In</Link>
-          </li>
-        )}
-      </ul>
+    <div>
+      <div className="tool">
+        <b>
+            <Link to="/">Home | </Link>
+            <Link to="/hangman">Hangman | </Link>
+          {isLoggedIn ? (
+              <button onClick={handleLogout}>Logout {userForLogOut.user}</button>
+          ) : (
+              <Link to="/login">Log In </Link>
+          )}
+        </b>
+      </div>
     </div>
   );
 }

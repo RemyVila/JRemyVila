@@ -180,9 +180,9 @@ const restartGame = () => {
   }
 
   return (
-    <div>
+    <div className='hangmanContainer'>
       <div>
-        <h3>Hangman</h3>
+        <h1>Hangman</h1>
         <div>
           <img className="hangman_limbs" src={limbImagePath} alt={`Hangman with ${limbs} limbs`} />
         </div>
@@ -241,7 +241,7 @@ const restartGame = () => {
           )}
         </div>
         <div>
-          <h4>Leaderboard</h4>
+          <h2>Leaderboard</h2>
           {leaderboard.map((item) => (
             <li key={item.id}>
               User: {item.user} <br />
