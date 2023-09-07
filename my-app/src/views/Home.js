@@ -33,7 +33,7 @@ function Home() {
             Only documentation and a little chatGPT as resources.
           </p>
           <p>
-            Please check out the Hangman page as it is the keystone of the project
+             Please check out the Hangman page as it is the keystone of the project
           </p>
         </div>
       </div>
