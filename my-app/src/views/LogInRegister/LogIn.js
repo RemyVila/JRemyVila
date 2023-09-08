@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
+axios.defaults.baseURL = config.baseURL;
 
 function LogIn({ onLogin }) {
   const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ function LogIn({ onLogin }) {
     e.preventDefault();
     console.log(formData);
     try {
-      await axios.post('http://127.0.0.1:8000/api/login/', formData)
+      await axios.post(`/api/login/`, formData)
       .then(res => {
         console.log(res.data.message)
         const user = { user: formData.user };

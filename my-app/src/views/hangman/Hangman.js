@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 import limbs4 from './assets/4 limbs.jpg';
 import limbs3 from './assets/3 limbs.jpg';
 import limbs2 from './assets/2 legs.jpg';
 import limbs1 from './assets/1 leg.jpg';
 import limbs0 from './assets/0 limbs.jpg';
 
-function Hangman({ userForLogOut }) {
-  const testingAPI = 'http://127.0.0.1:8000/';
+import config from '../../config';
+axios.defaults.baseURL = config.baseURL;
 
+
+function Hangman({ userForLogOut }) {
   // State for word bank data, working word, limbs count, known letters, and leaderboard
   const [wordBankData, setWordBankData] = useState([]);
   const [workingWord, setWorkingWord] = useState([]);
@@ -65,7 +68,7 @@ function Hangman({ userForLogOut }) {
 
   // Function to fetch leaderboard data
   const fetchLeaderboardData = () => {
-    axios.get(`${testingAPI}api/leaderboard/`)
+    axios.get(`api/leaderboard/`)
       .then((response) => {
         setLeaderboard(response.data.leaderboard);
       })
@@ -95,7 +98,7 @@ function Hangman({ userForLogOut }) {
 
             // Conditional posting of user data
             const userData = typeof userForLogOut === 'object' ? userForLogOut.user : userForLogOut;
-            axios.post(`${testingAPI}api/leaderboard/update/`, {
+            axios.post(`api/leaderboard/update/`, {
               user: userData,
               game_result: 1,
             })
@@ -115,7 +118,7 @@ function Hangman({ userForLogOut }) {
 
             // Conditional posting of user data
             const userData = typeof userForLogOut === 'object' ? userForLogOut.user : userForLogOut;
-            axios.post(`${testingAPI}api/leaderboard/update/`, {
+            axios.post(`api/leaderboard/update/`, {
               user: userData,
               game_result: 0,
             })

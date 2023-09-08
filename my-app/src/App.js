@@ -7,8 +7,7 @@ import LogIn from './views/LogInRegister/LogIn';
 import Register from './views/LogInRegister/Register';
 import Home from './views/Home';
 
-import axios from 'axios';
-axios.defaults.baseURL = 'http://127.0.0.1:8000/'
+
 
 function App() {
   const [userForLogOut, setUserForLogOut] = useState(null);
