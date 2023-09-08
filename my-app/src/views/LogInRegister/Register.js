@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -16,11 +17,22 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let submittedData = {
+      user: formData.username,
+      password: formData.password
+    }
     // Make an API request to register the user with the form data
-    console.log('Submitted data:', formData);
-    // You can add your registration logic here
+    try {
+      await axios.post(`api/register/`, submittedData)
+      .then(res => {
+        console.log(res.data)
+      })
+    } catch (error) {
+      console.log(formData)
+      console.log(submittedData)
+    }
   };
 
   return (

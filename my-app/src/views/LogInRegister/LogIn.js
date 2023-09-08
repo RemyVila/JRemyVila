@@ -23,7 +23,7 @@ function LogIn({ onLogin }) {
       await axios.post('http://127.0.0.1:8000/api/login/', formData)
       .then(res => {
         console.log(res.data.message)
-        const user = { user: formData.user }; // Replace this with your login logic
+        const user = { user: formData.user };
         onLogin(user); // Pass the user data to the parent component
       })
 

@@ -38,7 +38,7 @@ function Hangman({ userForLogOut }) {
 
   // Function to fetch word bank data
   const fetchWordBankData = () => {
-    axios.get(`${testingAPI}api/hangman-wordbank/`)
+    axios.get(`api/hangman-wordbank/`)
       .then((response) => {
         setWordBankData(response.data);
   
