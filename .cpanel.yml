@@ -1,9 +1,16 @@
 ---
 deployment:
   tasks:
-    - copy:
-        source: jremyvila
-        destination: jremyvila_backend
-    - copy:
-        source: my_app
-        destination: public_html
+    - export DEPLOYBACKENDPATH=/home/jremyvil/jremyvila_backend/
+    - /bin/cp -R jremyvila $DEPLOYBACKENDPATH
+    
+    - export DEPLOYFRONTENDPATH=/home/jremyvil/public_html/
+    - /bin/cp -R my_app $DEPLOYFRONTENDPATH
+
+
+# CPANEL GIT DOCS EXAMPLE
+# ---
+# deployment:
+#   tasks:
+#     - export DEPLOYPATH=/home/example/public_html/
+#     - /bin/cp -R images $DEPLOYPATH
