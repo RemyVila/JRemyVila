@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - copy:
+        source: jremyvila
+        destination: jremyvila_backend
+    - copy:
+        source: my_app
+        destination: public_html
