@@ -21,6 +21,8 @@ function Hangman({ userForLogOut }) {
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', or 'lost'
 
+  
+
   // Initialize leaderboard with a default entry
   const [leaderboard, setLeaderboard] = useState([
     {
@@ -97,18 +99,34 @@ function Hangman({ userForLogOut }) {
             setHasWon(true); // Set the hasWon state to true
 
             // Conditional posting of user data
-            const userData = typeof userForLogOut === 'object' ? userForLogOut.user : userForLogOut;
-            axios.post(`api/leaderboard/update/`, {
-              user: userData,
-              game_result: 1,
-            })
-              .then(() => {
-                // Fetch leaderboard data immediately after updating
-                fetchLeaderboardData();
+            let userData = null
+            if(userForLogOut){
+              userData = typeof userForLogOut === 'object' ? userForLogOut.user : userForLogOut;
+              axios.post(`api/leaderboard/update/`, {
+                user: userData,
+                game_result: 1,
               })
-              .catch((error) => {
-                console.error('Error updating leaderboard:', error);
-              });
+                .then(() => {
+                  // Fetch leaderboard data immediately after updating
+                  fetchLeaderboardData();
+                })
+                .catch((error) => {
+                  console.error('Error updating leaderboard:', error);
+                });
+            }
+            else{
+              axios.post(`api/leaderboard/update/`, {
+                user: "Default",
+                game_result: 1,
+              })
+                .then(() => {
+                  // Fetch leaderboard data immediately after updating
+                  fetchLeaderboardData();
+                })
+                .catch((error) => {
+                  console.error('Error updating leaderboard:', error);
+                });
+            }
           }
         } else {
           setLimbs((prevLimbs) => prevLimbs - 1);
@@ -117,19 +135,35 @@ function Hangman({ userForLogOut }) {
             setGameStatus('lost');
 
             // Conditional posting of user data
-            const userData = typeof userForLogOut === 'object' ? userForLogOut.user : userForLogOut;
-            axios.post(`api/leaderboard/update/`, {
-              user: userData,
-              game_result: 0,
-            })
-              .then(() => {
-                // Fetch leaderboard data immediately after updating
-                fetchLeaderboardData();
+            let userData = null
+            if(userForLogOut){
+              userData = typeof userForLogOut === 'object' ? userForLogOut.user : userForLogOut;
+              axios.post(`api/leaderboard/update/`, {
+                user: userData,
+                game_result: 0,
               })
-              .catch((error) => {
-                console.error('Error updating leaderboard:', error);
-              });
-          }
+                .then(() => {
+                  // Fetch leaderboard data immediately after updating
+                  fetchLeaderboardData();
+                })
+                .catch((error) => {
+                  console.error('Error updating leaderboard:', error);
+                });
+            }
+            else{
+              axios.post(`api/leaderboard/update/`, {
+                user: "Default",
+                game_result: 0,
+              })
+                .then(() => {
+                  // Fetch leaderboard data immediately after updating
+                  fetchLeaderboardData();
+                })
+                .catch((error) => {
+                  console.error('Error updating leaderboard:', error);
+                });
+            }
+            }
         }
       }
     }
@@ -185,7 +219,7 @@ const restartGame = () => {
   return (
     <div className='hangmanContainer'>
       <div>
-        <h3>If you are not logged in, please log in and do not refresh the page before playing.</h3>
+        <h3>If you are not logged in, user on leaderboard update will default to "Default"</h3>
         <h1>Hangman</h1>
         <div>
           <img className="hangman_limbs" src={limbImagePath} alt={`Hangman with ${limbs} limbs`} />

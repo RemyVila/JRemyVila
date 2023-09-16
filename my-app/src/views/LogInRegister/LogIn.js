@@ -32,7 +32,6 @@ function LogIn({ onLogin }) {
     } catch (error) {
 
     }
-    // console.log('Submitted data:', formData);
   };
 
   return (

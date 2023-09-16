@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import config from '../config';
+axios.defaults.baseURL = config.baseURL;
 
 function Toolbar({ userForLogOut }) {
   // Initialize isLoggedIn state to false
@@ -19,7 +21,7 @@ function Toolbar({ userForLogOut }) {
   const handleLogout = async () => {
     try {
       // Send a POST request to the logout endpoint
-      await axios.post('http://127.0.0.1:8000/api/logout/', userForLogOut);
+      await axios.post(`/api/logout/`, userForLogOut);
 
       // Update the isLoggedIn state to false
       setIsLoggedIn(false);

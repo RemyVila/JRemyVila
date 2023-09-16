@@ -36,6 +36,23 @@ def update_leaderboard(request):
             user = data.get('user')
             game_result = data.get('game_result')
 
+
+            # import uuid
+
+            # Generate a random UUID (version 4)
+            # guid = uuid.uuid4()
+
+            # Convert the UUID to a string representation
+            # guid_str = str(guid)
+
+            # if(!user):
+            #     user = "tester"
+
+
+
+            
+
+
             # Check if the user already exists in the Leaderboard
             try:
                 leaderboard_entry = Leaderboard.objects.get(user=user)
@@ -103,6 +120,30 @@ def register(request):
     else:
         response_data = {'message': 'GET requests not supported'}
         return JsonResponse(response_data, status=405)  # 405 Method Not Allowed status code
+
+
+def delete_user(request):
+    if request.method == 'DELETE':
+        try:
+            data = json.loads(request.body)
+            username = data.get('user')
+
+
+            if username is not None:
+                try:
+                    user_profile = UserProfile.objects.get(user=username)
+                    user_profile.delete()
+                    return JsonResponse({'message': f'User {username} deleted successfully'})
+                except UserProfile.DoesNotExist:
+                    return JsonResponse({'message': f'User {username} not found'}, status=404)
+            else:
+                return JsonResponse({'message': 'user is required in the request data'}, status=400)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'message': 'Invalid JSON data'}, status=400)
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=405)
+
 
 
 # Fake Auth

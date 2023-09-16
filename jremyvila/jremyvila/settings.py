@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-9)5t*85-2x@63)r%a409dfvvuq5&fpg2k78v_f#*y8-az*ahj+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'jremyvila.s3-website.us-east-2.amazonaws.com',
+    '3.143.254.105',
+    '3.143.254.105:8000',
+    '127.0.0.1'
+]
+
 
 
 # Application definition
@@ -56,6 +62,9 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://jremyvila.s3-website.us-east-2.amazonaws.com",
+    "http://3.143.254.105:8000",
+    "http://3.143.254.105"
 ]
 
 ROOT_URLCONF = 'jremyvila.urls'

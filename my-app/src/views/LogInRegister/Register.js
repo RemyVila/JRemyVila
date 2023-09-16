@@ -6,6 +6,7 @@ axios.defaults.baseURL = config.baseURL;
 
 
 function Register() {
+  const [registered, setRegistered] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -31,6 +32,7 @@ function Register() {
       await axios.post(`api/register/`, submittedData)
       .then(res => {
         console.log(res.data)
+        setRegistered(true)
       })
     } catch (error) {
       console.log(formData)
@@ -74,7 +76,9 @@ function Register() {
         </div>
         <button type="submit">Register</button>
       </form>
-      <Link to="/login">Already have an account? Login</Link>
+      {registered ? (
+        <div> User "{formData.username}" registered successfully </div>
+      ) : <Link to="/login">Already have an account? Login</Link>}
     </div>
   );
 }
